@@ -27,5 +27,15 @@ with tab2:
 
 with st.sidebar:
     year = st.slider('Chose a year', 1910, 2021)
-    year_df =df[df['year']==year].head()
-    st.dataframe(year_df)
+    st.header(f'Top names by {year}')
+    year_df =df[df['year']==year]
+
+    girls_names = year_df[year_df.sex == 'F'].head().reset_index()
+    boys_names = year_df[year_df.sex == 'M'].head().reset_index()
+
+    newDF =pd.DataFrame({"Girls": girls_names['name'],
+                         'Boys': boys_names['name']})
+    
+    newDF = newDF.set_index(pd.Series([1, 2, 3, 4, 5]))
+
+    st.dataframe(newDF)
